@@ -1,4 +1,6 @@
 source /opt/boxen/env.sh
+bind -f /Users/troyshields/Documents/Bash/Profile/.inputrc
+
 export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.7.0_21.jdk/Contents/Home/';
 
 export CLICOLOR=1
@@ -8,6 +10,7 @@ export CLICOLOR=1
 alias l='ls -a'
 alias c='clear'
 alias ..='cd ..'
+alias gh='cd ~'
 
 #Vi shortcut
 alias sv='sudo vi'
