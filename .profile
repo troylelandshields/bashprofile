@@ -7,7 +7,7 @@ export CLICOLOR=1
 
 #Aliases
 #Directory traversal
-alias l='ls -al'
+alias l='ls -alh'
 alias c='clear'
 alias ..='cd ..'
 alias gh='cd ~'
