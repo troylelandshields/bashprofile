@@ -1,23 +1,33 @@
-source /opt/boxen/env.sh
+#source /opt/boxen/env.sh
 bind -f /Users/troyshields/Documents/sh/bashprofile/.inputrc
 
 export HISTFILESIZE=1000000;
 
-export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/';
+export JAVA_HOME=$(/usr/libexec/java_home);
 
 export CLICOLOR=1
 
 export PATH=$PATH:/Users/troyshields/Library/depot_tools
 export PATH=$PATH:/Users/troyshields/Documents/scripts/com.jive.v5.scripts
 export PATH=$PATH:/Users/troyshields/Documents/sh/scripts
+export PATH="$(brew --prefix homebrew/php/php56)/bin:$PATH"
+export PATH="/Users/troyshields/go_appengine:$PATH"
+export PATH="~/go/bin:$PATH"
 
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/Documents/device.ninja/shuriken
-source /usr/local/bin/virtualenvwrapper.sh
+
+#Go code visualizer
+#export PATH="~/go/src/github.com/CodeHipster/go-code-visualizer:$PATH"
+#alias govis="go-code-visualizer; cat dot-visual.gv | pbcopy; open -a \"/Applications/Google Chrome.app\" 'http://mdaines.github.io/viz.js/'"
+export PATH="~/go/src/github.com/troylelandshields/govis:$PATH"
+
+#export GOROOT=$HOME/go"
+#export PATH=$PATH:$GOROOT/bin
+
+##export WORKON_HOME=$HOME/.virtualenvs
+#export PROJECT_HOME=$HOME/Documents/device.ninja/shuriken
+#source /usr/local/bin/virtualenvwrapper.sh
 
 export DEVELOPMENT=true
-export AWS_ACCESS_KEY_ID=AKIAJV42JHLB3D7YQJGQ
-export AWS_SECRET_ACCESS_KEY=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
 
 #Aliases
 #Directory traversal
@@ -25,9 +35,8 @@ alias l='ls -alh'
 alias c='clear'
 alias ..='cd ..'
 alias gh='cd ~'
-alias gv='cd ~/Documents/workspace/com.jive.ftw.voicemail'
-alias nfs='sudo mount -t nfs -o resvport 10.99.0.3:/NFSStorage/pbx /cluster/nfs'
-alias prod_nfs='sudo mount -t nfs -o resvport 10.141.0.14:/NFSStorage/pbx /prod/nfs'
+alias gohome='cd ~/go/src/github.com/troylelandshields'
+alias addtopath='export PATH=${PWD}:$PATH'
 
 #Network
 alias pi='ssh tshields@50.186.74.99'
@@ -38,35 +47,28 @@ alias ip='curl http://ipecho.net/plain; echo'
 alias sv='sudo vi'
 
 #Postgres
-postgres_db='/Users/troyshields/Library/PostgreSQL/data'
+postgres_db='/usr/local/var/postgres'
 alias start_postgres="pg_ctl -D $postgres_db start"
 alias stop_postgres="pg_ctl -D $postgres_db stop"
 
 #Dev
-alias se='sudo /Applications/eclipse/Eclipse.app/Contents/MacOS/eclipse'
-alias mvn_new='/opt/boxen/homebrew/Cellar/maven/3.1.1/bin/mvn'
-alias clean_workspace='sudo find /Users/troyshields/Documents/workspace -name 'target' -exec rm -rf {} \;'
-alias pvu-core='ssh admin@172.17.9.141'
-alias pvu-services='ssh admin@172.17.9.130'
-alias orm-core='ssh admin@172.31.29.141'
-alias orm-services='ssh admin@172.31.29.130'
-alias pvu-deploy='ssh admin@bm4.pvu "sudo virt-jive-recreate voicemail-1";ssh admin@bm1.pvu "sudo virt-jive-recreate voicemail-core-1";'
-alias orm-deploy='ssh admin@bm13.ops "sudo virt-jive-recreate voicemail-test-1";ssh admin@bm13.ops "sudo virt-jive-recreate voicemail-core-test-1";'
-alias orm-jifdeploy='ssh admin@bm12.ops "sudo virt-jive-recreate v5-jif-test-1"'
-alias pvu-jifdeploy='ssh admin@bm1.pvu "sudo virt-jive-recreate v5-jif-1"'
-alias shrkn='cd /Users/troyshields/Documents/device-ninja/shuriken/shuriken'
 alias ngrep_port='sudo ngrep -d any -W byline -P  -p -q port $1'
 
+
+#GIT
+source /usr/local/git/contrib/completion/git-completion.bash
+source /usr/local/git/contrib/completion/git-prompt.sh
+
+export PS1="\[$(tput bold)\]\[$(tput setaf 1)\][\[$(tput setaf 3)\]\u\[$(tput setaf 2)\]@\[$(tput setaf 4)\]\h \[$(tput setaf 5)\]\W\[$(tput setaf 1)\]]\[$(tput setaf 7)\]$(__git_ps1 "(%s)")$ \[$(tput sgr0)\] \n"
+export GOPATH=$HOME/go
+
 #Misc
-alias downloadminecraft='scp -i ~/.ssh/minecraft.pem -r ec2-user@54.186.129.199:/home/ec2-user/minecraft/largebiomes2* ~/minecraft/largebiomes2/'
 alias grep='grep --color=auto'
 
 #Bash profile
 prfl_file='/Users/troyshields/Documents/sh/bashprofile/.profile'
 alias prof="vi $prfl_file"
 alias reload="source $prfl_file"
-export JIM_APIKEY=559e08b65d0dc8eb3cd99304615a1dcc
-export COG_KEY=30e9f84bcf1452bb32ac8b09d4c16ac3b77b328e
 
 # The next line updates PATH for the Google Cloud SDK.
 source '/Users/troyshields/google-cloud-sdk/path.bash.inc'
@@ -76,3 +78,17 @@ source '/Users/troyshields/google-cloud-sdk/completion.bash.inc'
 
 #minecraft
 alias minecraft='java -d64 -Xms4096M -Xmx5130M -jar /Applications/Minecraft.app/Contents/Resources/Java/Bootstrap.jar'
+
+
+#open visual studio code
+code () {  
+    if [[ $# = 0 ]]
+    then
+        open -a "Visual Studio Code"
+    else
+        [[ $1 = /* ]] && F="$1" || F="$PWD/${1#./}"
+        open -a "Visual Studio Code" --args "$F"
+    fi
+}
+
+GO15VENDOREXPERIMENT=1
