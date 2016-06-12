@@ -12,7 +12,6 @@ export PATH=$PATH:/Users/troyshields/Documents/scripts/com.jive.v5.scripts
 export PATH=$PATH:/Users/troyshields/Documents/sh/scripts
 export PATH="$(brew --prefix homebrew/php/php56)/bin:$PATH"
 export PATH="/Users/troyshields/go_appengine:$PATH"
-export PATH="~/go/bin:$PATH"
 
 
 #Go code visualizer
@@ -20,8 +19,8 @@ export PATH="~/go/bin:$PATH"
 #alias govis="go-code-visualizer; cat dot-visual.gv | pbcopy; open -a \"/Applications/Google Chrome.app\" 'http://mdaines.github.io/viz.js/'"
 export PATH="~/go/src/github.com/troylelandshields/govis:$PATH"
 
-#export GOROOT=$HOME/go"
-#export PATH=$PATH:$GOROOT/bin
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
 
 ##export WORKON_HOME=$HOME/.virtualenvs
 #export PROJECT_HOME=$HOME/Documents/device.ninja/shuriken
@@ -37,6 +36,7 @@ alias ..='cd ..'
 alias gh='cd ~'
 alias gohome='cd ~/go/src/github.com/troylelandshields'
 alias addtopath='export PATH=${PWD}:$PATH'
+alias gitlog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
 
 #Network
 alias pi='ssh tshields@50.186.74.99'
@@ -91,4 +91,4 @@ code () {
     fi
 }
 
-GO15VENDOREXPERIMENT=1
+unset GO15VENDOREXPERIMENT
